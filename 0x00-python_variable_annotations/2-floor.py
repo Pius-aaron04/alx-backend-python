@@ -1,4 +1,4 @@
-#!/usr/bin/env pyhton3
+#!/usr/bin/env python3
 """
 Contains a function that returns the floor / int value of a float
 """

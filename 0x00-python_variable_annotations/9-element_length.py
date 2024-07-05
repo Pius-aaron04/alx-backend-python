@@ -1,0 +1,13 @@
+#!/usr/bin/env python3
+"""
+Defines a function that returns list of tuples
+"""
+
+from typing import Iterable, List, Tuple, Sequence
+
+
+def element_length(lst: Iterable[Sequence]) -> List[Tuple[Sequence, int]]:
+    """
+    returns list of tuples
+    """
+    return [(i, len(i)) for i in lst]

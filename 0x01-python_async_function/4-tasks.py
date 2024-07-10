@@ -6,7 +6,7 @@ Concurrent coroutines with async and await
 """
 import asyncio
 
-wait_random = __import__('0-basic_async_syntax').wait_random
+task_wait_random = __import__('3-tasks').task_wait_random
 
 
 async def task_wait_n(n: int, max_delay: int) -> list:
@@ -15,7 +15,6 @@ async def task_wait_n(n: int, max_delay: int) -> list:
     runs n coroutines concurrently with async
     """
 
-    coroutines = [asyncio.create_task(wait_random(max_delay))
-                  for _ in range(n)]
+    coroutines = [task_wait_random(max_delay) for _ in range(n)]
 
     return sorted(await asyncio.gather(*coroutines))

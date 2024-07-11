@@ -9,7 +9,7 @@ import asyncio
 task_wait_random = __import__('3-tasks').task_wait_random
 
 
-async def task_wait_n(n: int, max_delay: int) -> list:
+async def task_wait_n(n: int, max_delay: int) -> list[float]:
     """
     wait_n
     runs n coroutines concurrently with async
@@ -17,4 +17,9 @@ async def task_wait_n(n: int, max_delay: int) -> list:
 
     coroutines = [task_wait_random(max_delay) for _ in range(n)]
 
-    return sorted(await asyncio.gather(*coroutines))
+    delays = await asyncio.gather(*coroutines)
+    for i in range(len(delays)):
+        for j in range(i, len(delays)):
+            if delays[i] > delays[j]:
+                delays[i], delays[j] = delays[j], delays[i]
+    return delays

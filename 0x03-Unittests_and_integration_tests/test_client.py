@@ -52,3 +52,24 @@ class TestGithubOrgClient(unittest.TestCase):
         """test has license method"""
         self.assertEqual(GithubOrgClient.has_license(repo, license_key),
                          expected)
+
+
+@parameterized_class(('org_payload', 'repos_payload',
+                      'expected_repos', 'apache_repos'), TEST_PAYLOAD)
+class TestIntegrationGithubOrgClient(unittest.TestCase):
+    """Integration test for GithubOrgClient class"""
+
+    @classmethod
+    def setUpClass(cls):
+        """Setup class for test"""
+
+        cls.get_patcher = patch('requests.get', side_effect=utils.get_json)
+        cls.get_patcher.start()
+        cls.get_patcher.return_value.json.return_value = cls.org_payload
+        cls.client = GithubOrgClient('google')
+
+    @classmethod
+    def tearDownClass(cls):
+        """Tear down class for test"""
+
+        cls.get_patcher.stop()
